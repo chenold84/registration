@@ -52,8 +52,15 @@ public class RegistrationService {
 	 * @return
 	 */
 	public Optional<Domain> getDomainDtls(String domainName) {
-		String[] domArr = domainName.split("-");
-		Optional<Domain> domain = repository.findById(domArr[domArr.length - 1]);
+		Optional<Domain> domain = Optional.ofNullable(null);
+		int index = -1;
+		do {
+			domain = repository.findById(domainName.substring(index + 1));
+			if(domain.isPresent()) {
+				break;
+			}
+			index = domainName.indexOf('.', index+1);
+		}while(index >= 0);
 		return domain;
 	}
 
@@ -63,7 +70,7 @@ public class RegistrationService {
 	 * @param isPremium
 	 * @return
 	 */
-	public List<Domain> getDomainsBasedOnPremium(boolean isPremium) {		
+	public List<Domain> getDomainsBasedOnPremium(boolean isPremium) {
 		return repository.getDomainsBasedOnPremium(isPremium);
 	}
 }

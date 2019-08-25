@@ -33,9 +33,9 @@ public class Bootstrap implements CommandLineRunner{
 		domains.add(new Domain("dict.com", true, new BigDecimal(800)));
 		domains.add(new Domain("education.net", true, new BigDecimal(300)));
 		
-		domains.add(new Domain(".com", false, new BigDecimal(10)));
-		domains.add(new Domain(".net", false, new BigDecimal(9)));
-		domains.add(new Domain(".com.au", false, new BigDecimal(20)));
+		domains.add(new Domain("com", false, new BigDecimal(10)));
+		domains.add(new Domain("net", false, new BigDecimal(9)));
+		domains.add(new Domain("com.au", false, new BigDecimal(20)));
 		
 		repository.saveAll(domains);
 	}

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -39,13 +40,13 @@ public class RegistrationApplicationTests {
 	public void TestGetDomainDtls() {
 		Optional<Domain> domain;
 		
-		String domainName = ".com";
+		String domainName = "a.com";
 		
 		domain = service.getDomainDtls(domainName);
 		
 		assertTrue("Unable to find .com", domain.isPresent());
 		
-		domainName = ".xxx";
+		domainName = "a.xxx";
 		domain = service.getDomainDtls(domainName);
 		assertFalse(".xxx should not return true", domain.isPresent());
 	}
@@ -53,11 +54,20 @@ public class RegistrationApplicationTests {
 	@Test
 	public void TestGetPrice() {
 		HashMap<String, Integer> request = new HashMap<>();
-		request.put(".com", 2);
+		request.put("a.com", 2);
 		request.put("apple.com.au", 2);
 		request.put(".xxx", 2);
 		
 		BigDecimal result = service.getPrice(request);
 		assertTrue("The price for the request should be 2020", result.intValue() == 2020);
+	}
+	
+	@Test
+	public void TestGetDomainsBasedOnPremium() {
+		List<Domain> domains = service.getDomainsBasedOnPremium(true);
+		assertTrue("The total number of premium domains should be 3", domains.size() == 3);
+		
+		domains = service.getDomainsBasedOnPremium(false);
+		assertTrue("The total number of domains should be 3", domains.size() == 3);
 	}
 }

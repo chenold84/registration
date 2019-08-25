@@ -35,35 +35,29 @@ public class TestRegistrationService {
 	}
 
 	@Test
-	public void testGetPrice() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetDomainDtls() {
 		Optional<Domain> domain = Optional.ofNullable(null);
 		
-		when(repository.findById(".xxx")).thenReturn(domain);
+		when(repository.findById("a.xxx")).thenReturn(domain);
 		
-		Optional<Domain> result = service.getDomainDtls(".xxx");
+		Optional<Domain> result = service.getDomainDtls("a.xxx");
 		
-		verify(repository, times(1)).findById(".xxx");
-		assertFalse("The domain .xxx should not be present",result.isPresent());
+		verify(repository, times(1)).findById("xxx");
+		assertFalse("The domain a.xxx should not be present",result.isPresent());
 	}
 	
 	@Test
 	public void testDomainDtlsPresent() {
-		String domainName = ".com";
-		Domain domainFound = new Domain(domainName, false, new BigDecimal(10));
+		String domainName = "a.com";
+		Domain domainFound = new Domain("com", false, new BigDecimal(10));
 		Optional<Domain> domain = Optional.ofNullable(domainFound);
 		
-		when(repository.findById(domainName)).thenReturn(domain);
+		when(repository.findById("com")).thenReturn(domain);
 		
 		Optional<Domain> result = service.getDomainDtls(domainName);
 		
 		verify(repository, times(1)).findById(domainName);
 		assertTrue("The domain .com should be present",result.isPresent());
-		assertTrue("Invalid domain name returned", result.get().getDomainName().equals(domainName));
 	}
 
 	@Test
